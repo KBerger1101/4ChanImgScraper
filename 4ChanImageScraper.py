@@ -1,4 +1,4 @@
-#Mess around
+#4ChanImageScraper
 
 from bs4 import BeautifulSoup, SoupStrainer
 
@@ -26,19 +26,20 @@ for image in images:
     print(imageCount)
     urlimage= str(image)
     match=re.findall( r'href="([^"]*)"' ,urlimage)
-    urlimage = match[0]
-    
-   
-    
-    print(urlimage)
+    #ignore the error images
+    if imageCount>1:
+        
+        urlimage = match[0] 
+        print(urlimage)
+        
+        imageSiteUrl= "http:" +urlimage
+        response = requests.get(imageSiteUrl, stream=True)
+        with open('img'+str(imageCount)+'.png','wb') as out_file:
+            shutil.copyfileobj(response.raw, out_file)
+        del response
     imageCount+=1
-    imageSiteUrl= "http:" +urlimage
-    response = requests.get(imageSiteUrl, stream=True)
-    with open('img'+str(imageCount)+'.png','wb') as out_file:
-        shutil.copyfileobj(response.raw, out_file)
-    del response
-    
 
+print("You wish has been granted")
 
 
 
