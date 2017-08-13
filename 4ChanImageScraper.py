@@ -8,7 +8,7 @@ import urllib
 import shutil
 
 
-url = "4chan.org/co/"
+url = "4chan.org/v/"
 
 r  = requests.get("http://" +url)
 
