@@ -7,10 +7,12 @@ import re
 import urllib
 import shutil
 
-
-url = "4chan.org/v/"
-
+#ask user which board  
+url = "4chan.org/"
+board= raw_input("which board would you like to scrape?")
+url= url+board+"/"
 r  = requests.get("http://" +url)
+
 
 data = r.text
 
@@ -31,10 +33,11 @@ for image in images:
         
         urlimage = match[0] 
         print(urlimage)
+        imageType= urlimage[-4:]
         
         imageSiteUrl= "http:" +urlimage
         response = requests.get(imageSiteUrl, stream=True)
-        with open('img'+str(imageCount)+'.png','wb') as out_file:
+        with open('img'+str(imageCount)+imageType,'wb') as out_file:
             shutil.copyfileobj(response.raw, out_file)
         del response
     imageCount+=1
